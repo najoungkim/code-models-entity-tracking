@@ -1,0 +1,20 @@
+{
+    "editor.wordWrap": "on",
+    "python.languageServer": "Pylance",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8",
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4,
+        "editor.formatOnSave": true,
+    },
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "workbench.editor.wrapTabs": true,
+    "window.zoomLevel": -1,
+    "python.autoComplete.extraPaths": [],
+    "black-formatter.args": [
+        "--line-length 119"
+    ],
+    "python.analysis.extraPaths": [],
+    // "editor.defaultFormatter": "ms-python.black-formatter",
+}
