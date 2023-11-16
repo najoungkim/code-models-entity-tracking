@@ -1,6 +1,5 @@
 import argparse
 import json
-import csv
 import re
 
 import pandas as pd
@@ -38,11 +37,11 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
     
-    out_filename = args.input_file.replace(".tsv", "-expanded.tsv")
+    out_filename = args.input_file.replace(".jsonl", "-expanded.jsonl")
     
     with open(args.input_file, encoding="utf-8") as in_f, \
           open(args.expanded_dataset, encoding="utf-8") as exp_f:
-        pred_df = pd.read_csv(in_f, delimiter="\t")
+        pred_df = pd.read_json(in_f, lines=True, orient="records")
         cleaned_indiv_predictions = []
         targets = []
         contexts = []
@@ -145,7 +144,9 @@ if __name__ == "__main__":
                     cleaned_indiv_predictions.append(indiv_pred[idx:].strip("."))
         
         final_df = pd.DataFrame({'target': targets, 'prediction': cleaned_indiv_predictions,'input': contexts})
-        final_df.to_csv(out_filename, sep='\t')
+        with open(out_filename, 'w', encoding="UTF-8") as wf:
+            wf.write(final_df.to_json(orient='records', lines=True, force_ascii=False))
+        
        
     
     
