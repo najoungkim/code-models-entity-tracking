@@ -36,6 +36,7 @@ def main():
     test_df = pd.read_json(dataset_path.format(
         'test-subsample-states'), orient='records', lines=True)
 
+    os.makedirs(args.output_path, exist_ok=True)
     predictions_path = os.path.join(args.output_path, "predictions.jsonl")
     with open(predictions_path, "w", encoding="UTF-8") as out_f:
         for idx, ex in test_df.iterrows():
