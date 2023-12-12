@@ -30,15 +30,15 @@ class AutoregressiveModel(BaseModel):
 
     def chat_generate(self, messages):
         """Generate response for chat-optimized model"""
-        messages = [
-            {'role': 'user', 'content': "write a quick sort algorithm in python."}
-        ]
 
+        print(messages)
         inputs = self.tokenizer.apply_chat_template(
             messages, return_tensors="pt").to(self.device)
-        input_len = inputs[0].shape[1]
+    
+        input_len = inputs[0].shape[0]
+        
         outputs = self.model.generate(
-            inputs, max_length=self.model.config.max_position_embeddings)
+            inputs, max_new_tokens=512, max_length=self.model.config.max_position_embeddings)
 
         output = self.tokenizer.decode(
             outputs[0][input_len:], skip_special_tokens=True)
