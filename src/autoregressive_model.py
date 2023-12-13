@@ -45,7 +45,7 @@ def main():
     with open(predictions_path, "w", encoding="UTF-8") as out_f:
         for idx, ex in test_df.iterrows():
             # test in condensed format, so only consider every BOX_NUMBERth entry
-            if idx % NUM_BOXES:
+            if idx % NUM_BOXES == 0:
                 prefix = ex["sentence_masked"].split(" <extra_id_0>")[0][:-15]
                 target = ex["masked_content"].replace("<extra_id_0> ", "")
                 if chat:
