@@ -17,16 +17,17 @@ class AutoregressiveModel(BaseModel):
 
     def generate(self, prompt):
         inputs = self.tokenizer(
-            prompt, return_tensors="pt", return_attention_mask=False).to(self.device)
-        input_len = inputs[0].shape[1]
+            prompt, return_tensors="pt")
+        input_len = len(inputs[0].ids)
         outputs = self.model.generate(
-            **inputs, max_length=self.model.config.max_position_embeddings)
+            **inputs.to(self.device), max_new_tokens=512, max_length=self.model.config.max_position_embeddings)
 
         # Strip the prefix text
-        text = self.tokenizer.batch_decode(outputs[input_len:])[0]
-        output = text
-        # output = text[len(prompt):].strip()
-        return output
+        tokens = self.tokenizer.decode(
+            outputs[0][input_len:], skip_special_tokens=True)
+        text = "".join(tokens)
+
+        return text
 
     def chat_generate(self, messages):
         """Generate response for chat-optimized model"""
@@ -34,9 +35,9 @@ class AutoregressiveModel(BaseModel):
         print(messages)
         inputs = self.tokenizer.apply_chat_template(
             messages, return_tensors="pt").to(self.device)
-    
+
         input_len = inputs[0].shape[0]
-        
+
         outputs = self.model.generate(
             inputs, max_new_tokens=512, max_length=self.model.config.max_position_embeddings)
 
