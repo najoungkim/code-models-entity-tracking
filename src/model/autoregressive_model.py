@@ -32,7 +32,6 @@ class AutoregressiveModel(BaseModel):
     def chat_generate(self, messages):
         """Generate response for chat-optimized model"""
 
-        print(messages)
         inputs = self.tokenizer.apply_chat_template(
             messages, return_tensors="pt").to(self.device)
 

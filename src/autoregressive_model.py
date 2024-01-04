@@ -3,10 +3,15 @@ import json
 import torch
 import os
 import pandas as pd
+from tqdm import tqdm
+import transformers
+from transformers.utils import logging
 
 from model.autoregressive_model import AutoregressiveModel
 from prompt.base_prompt import ChatPrompt
 from prompt.prompt_library import TwoShotPrompt
+
+logging.set_verbosity(transformers.logging.CRITICAL)
 
 NUM_BOXES = 7
 
@@ -33,17 +38,19 @@ def main():
     else:
         prompt = TwoShotPrompt
 
-    model = AutoregressiveModel(args.model_name_or_checkpoint, device=device)
-
     # Load datasets from path
     dataset_path = os.path.join(args.dataset_path, '{}-t5.jsonl')
     test_df = pd.read_json(dataset_path.format(
         'test-subsample-states'), orient='records', lines=True)
 
+    # Set output path
     os.makedirs(args.output_path, exist_ok=True)
     predictions_path = os.path.join(args.output_path, "predictions.jsonl")
+
+    model = AutoregressiveModel(args.model_name_or_checkpoint, device=device)
+
     with open(predictions_path, "w", encoding="UTF-8") as out_f:
-        for idx, ex in test_df.iterrows():
+        for idx, ex in tqdm(test_df.iterrows(), total=len(test_df)):
             # test in condensed format, so only consider every BOX_NUMBERth entry
             if idx % NUM_BOXES == 0:
                 prefix = ex["sentence_masked"].split(" <extra_id_0>")[0][:-15]
