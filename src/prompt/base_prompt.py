@@ -80,4 +80,4 @@ class ChatPrompt(BasePrompt):
 
 
 if __name__ == '__main__':
-    print(BasePrompt().instruction)
+    print(ChatPrompt().prompt_prefix())

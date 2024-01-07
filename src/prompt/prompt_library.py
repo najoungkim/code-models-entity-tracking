@@ -37,4 +37,4 @@ FourShotPrompt = BasePrompt(
 
 
 if __name__ == '__main__':
-    print(FourShotPrompt.prompt_prefix())
+    print(TwoShotPrompt.prompt_prefix())

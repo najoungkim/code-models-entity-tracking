@@ -57,6 +57,8 @@ def main():
                 target = ex["masked_content"].replace("<extra_id_0> ", "")
                 if chat:
                     messages = prompt.get_prompt(prefix)
+                    # print(messages)
+                    # break
                     response = model.chat_generate(messages)
                 else:
                     input = prompt.get_prompt(prefix)

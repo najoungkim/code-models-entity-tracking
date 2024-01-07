@@ -12,7 +12,7 @@ class AutoregressiveModel(BaseModel):
 
     def initialize_model(self):
         self.model = AutoModelForCausalLM.from_pretrained(
-            self.model_str).to(self.device)
+            self.model_str, trust_remote_code=True).to(self.device)
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_str)
 
     def generate(self, prompt):

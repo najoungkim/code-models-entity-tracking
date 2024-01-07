@@ -310,16 +310,18 @@ def main():
 
     print("#" * 80)
     print(f"{BOLD_START}Overall Accuracy:{BOLD_END}")
-    print(
-        f"Examples: {int(acc['correct'][0])}/{int(acc['count'][0])}={acc['accuracy'][0]}")
-    print(
-        f"States: {int(acc_state['correct'][0])}/{int(acc_state['count'][0])}={acc_state['accuracy'][0]}")
+    for df, granularity in [(acc, "Examples"), (acc_state, "States")]:
+        print(
+            f"{granularity}: {int(df['correct'].iloc[0])}/{int(df['count'].iloc[0])}={df['accuracy'].iloc[0] * 100.0:.2f}")
 
-    acc_by_numops_local = res_ex.groupby("numops_local").agg(accuracy=pd.NamedAgg("correct", lambda x: x.mean()),
-                                                             count=pd.NamedAgg("correct", lambda x: x.count()))
+    acc_by_numops_local = res_ex.groupby("numops_local").agg(
+        accuracy=pd.NamedAgg("correct", lambda x: f"{x.mean() * 100.0:.2f}"),
+        count=pd.NamedAgg("correct", lambda x: x.count())
+    )
     print("#" * 80)
     print(f"{BOLD_START}Example accuracy by number of operations affecting box state:{BOLD_END}")
     print(acc_by_numops_local)
+    # print(type(acc_by_numops_local))
     print("#" * 80)
 
 
