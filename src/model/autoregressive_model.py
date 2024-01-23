@@ -7,13 +7,21 @@ from model.base_model import BaseModel
 class AutoregressiveModel(BaseModel):
     """Wrapper class for Autoregressive models in HF."""
 
-    def __init__(self, model_str, device="cpu"):
-        super().__init__(model_str=model_str, device=device)
+    def __init__(self, model_str, quantization_config, device="cpu", hf_key=None):
+        super().__init__(
+            model_str=model_str,
+            quantization_config=quantization_config,
+            device=device,
+            hf_key=None)
 
     def initialize_model(self):
         self.model = AutoModelForCausalLM.from_pretrained(
-            self.model_str).to(self.device)
-        self.tokenizer = AutoTokenizer.from_pretrained(self.model_str)
+            self.model_str,
+            quantization_config=self.quantization_config,
+            use_auth_token=self.hf_key)
+        if self.quantization_config is None:
+            self.model.to(self.device)
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_str, use_auth_token=self.hf_key)
 
     def generate(self, prompt):
         inputs = self.tokenizer(
