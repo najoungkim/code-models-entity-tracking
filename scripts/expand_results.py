@@ -1,3 +1,5 @@
+"""Expand results."""
+
 import argparse
 import json
 import re
@@ -6,6 +8,7 @@ import pandas as pd
 
 
 def parse_args():
+    """Parse arguments."""
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--input_file",
@@ -39,8 +42,8 @@ if __name__ == "__main__":
 
             if i % args.num_boxes == 0:
                 cols = pred_df.iloc[i // args.num_boxes]
-                target, pred, context = (
-                    cols["target"],
+                pred, context = (
+                    # cols["target"],
                     cols["prediction"],
                     cols["input"],
                 )
@@ -134,9 +137,9 @@ if __name__ == "__main__":
                     context = context.replace(
                         "\\n\\nLet's think step by step.\\n", "")
 
-                #assert contexts[-1].replace("Box 0 contains .", ".") == context.replace(
+                # assert contexts[-1].replace("Box 0 contains .", ".") == context.replace(
                 #    "Box 0 contains .", "."
-                #), f"contexts do not match, likely because --input_file and --expanded_dataset are different datasets\n{contexts[-1]}\n{context}"
+                # ), f"contexts do not match, likely because --input_file and --expanded_dataset are different datasets\n{contexts[-1]}\n{context}"
                 # the first prediction has the format of the individual predictions
                 # e.g., "contains the plane" or "is empty".
                 cleaned_indiv_predictions.append(

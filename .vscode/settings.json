@@ -15,6 +15,10 @@
     "black-formatter.args": [
         "--line-length 119"
     ],
+    "python.linting.pylintArgs": [
+        "--disable=undefined-variable",
+        "--disable=missing-module-docstring",
+        "--disable=no-member",
+    ],
     "python.analysis.extraPaths": [],
-    // "editor.defaultFormatter": "ms-python.black-formatter",
 }

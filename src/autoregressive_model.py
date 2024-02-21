@@ -1,7 +1,9 @@
+"""Experiments for autoregressive model."""
+
 import argparse
 import json
-import torch
 import os
+import torch
 import pandas as pd
 from tqdm import tqdm
 import transformers
@@ -9,7 +11,7 @@ from transformers.utils import logging
 
 from model.autoregressive_model import AutoregressiveModel
 from prompt.base_prompt import ChatPrompt
-from prompt.prompt_library import TwoShotPrompt
+from prompt.prompt_library import TwoShotPrompt, FourShotPrompt
 
 logging.set_verbosity(transformers.logging.CRITICAL)
 
@@ -21,27 +23,28 @@ def main():
     parser.add_argument("--model_name_or_checkpoint", default=None, type=str, required=True,
                         help="Name of model to use (e.g., 't5-base') or a path that contains the model checkpoint.")
     parser.add_argument("--prompt", default=None, type=str)
-    parser.add_argument("--dataset_path", type=str, required=True,
-                        help="Path to a directory that contains files of the form {split}-t5.jsonl")
+    parser.add_argument("--test_file", type=str, required=True,
+                        help="Path to test file.")
     parser.add_argument("--output_path", default=None, type=str, required=True)
-
+    parser.add_argument("--k_shot", default=2, type=int, choices=[2, 4],
+                        help="Number of examples in prompt.")
     parser.add_argument("--chat", action="store_true",
-                        help="Set this flag for evaluating chat-based models")
+                        help="Set this flag for evaluating chat-based models.")
 
     args = parser.parse_args()
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
+    prompt_class = TwoShotPrompt if args.k_shot == 2 else FourShotPrompt
     chat = args.chat
     if chat:
-        prompt = ChatPrompt(few_shot_examples=TwoShotPrompt.few_shot_examples)
+        prompt = ChatPrompt(few_shot_examples=prompt_class.few_shot_examples,
+                            model_str=args.model_name_or_checkpoint)
     else:
-        prompt = TwoShotPrompt
+        prompt = prompt_class
 
     # Load datasets from path
-    dataset_path = os.path.join(args.dataset_path, '{}-t5.jsonl')
-    test_df = pd.read_json(dataset_path.format(
-        'test-subsample-states'), orient='records', lines=True)
+    test_df = pd.read_json(args.test_file, orient='records', lines=True)
 
     # Set output path
     os.makedirs(args.output_path, exist_ok=True)
@@ -54,21 +57,14 @@ def main():
             # test in condensed format, so only consider every BOX_NUMBERth entry
             if idx % NUM_BOXES == 0:
                 prefix = ex["sentence_masked"].split(" <extra_id_0>")[0][:-15]
-                target = ex["masked_content"].replace("<extra_id_0> ", "")
                 if chat:
                     messages = prompt.get_prompt(prefix)
-                    # print(messages)
-                    # break
                     response = model.chat_generate(messages)
                 else:
-                    input = prompt.get_prompt(prefix)
-                    response = model.generate(input)
+                    query = prompt.get_prompt(prefix)
+                    response = model.generate(query)
 
-                # TODO: target is wrong since it only outputs one box
-                # this is currently taken care of by expand_results.py
-                # but would be cleaner to fix this here
-                out = {"input": prefix, "target": target,
-                       "prediction": response}
+                out = {"input": prefix, "prediction": response}
                 print(json.dumps(out), file=out_f)
 
 

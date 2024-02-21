@@ -56,11 +56,25 @@ class BasePrompt:
 class ChatPrompt(BasePrompt):
     """Prompt class for chat-optimized models."""
 
+    def __init__(self, few_shot_examples=None, model_str=None):
+        super().__init__()
+        self.few_shot_examples = few_shot_examples
+        self.model_str = model_str
+
     def prompt_prefix(self):
         """Prompt list with instruction and few-shot examples in chat format"""
 
         messages = []
-        messages.append({"role": "system", "content": self.instruction})
+        if "mistralai/Mistral-7B-Instruct" in self.model_str:
+            # (Shubham) Apparently there's no system role in Mistral models!
+            # Was getting this error: Conversation roles must alternate user/assistant/user/assistant/
+            # On a small subset, providing instruction as a chat between user and assistant did better
+            # than not providing the instruction at all.
+            messages.append({"role": "user", "content": self.instruction})
+            messages.append({"role": "assistant", "content": "Okay."})
+        else:
+            messages.append({"role": "system", "content": self.instruction})
+
         for input_str, output_str in self.few_shot_examples:
             messages.append(
                 {"role": "user", "content": f"{self.input_prefix}{input_str}"})
