@@ -72,6 +72,8 @@ class ChatPrompt(BasePrompt):
             # than not providing the instruction at all.
             messages.append({"role": "user", "content": self.instruction})
             messages.append({"role": "assistant", "content": "Okay."})
+        elif "gemma" in self.model_str:
+            messages.append({"role": "user", "content": self.instruction})
         else:
             messages.append({"role": "system", "content": self.instruction})
 
@@ -79,7 +81,7 @@ class ChatPrompt(BasePrompt):
             messages.append(
                 {"role": "user", "content": f"{self.input_prefix}{input_str}"})
             messages.append(
-                {"role": "assistant", "content": f"{self.output_prefix} { output_str}"})
+                {"role": "assistant", "content": f"{self.output_prefix} {output_str}"})
 
         return messages
 
@@ -94,4 +96,4 @@ class ChatPrompt(BasePrompt):
 
 
 if __name__ == '__main__':
-    print(ChatPrompt().prompt_prefix())
+    print(ChatPrompt("").prompt_prefix())

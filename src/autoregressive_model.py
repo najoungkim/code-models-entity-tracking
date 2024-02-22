@@ -8,6 +8,7 @@ import pandas as pd
 from tqdm import tqdm
 import transformers
 from transformers.utils import logging
+from transformers import pipeline
 
 from model.autoregressive_model import AutoregressiveModel
 from prompt.base_prompt import ChatPrompt
