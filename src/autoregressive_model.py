@@ -14,6 +14,10 @@ from model.autoregressive_model import AutoregressiveModel
 from prompt.base_prompt import ChatPrompt
 from prompt.prompt_library import TwoShotPrompt, FourShotPrompt
 
+import warnings
+warnings.filterwarnings('ignore', category=UserWarning,
+                        message='TypedStorage is deprecated')
+
 logging.set_verbosity(transformers.logging.CRITICAL)
 
 NUM_BOXES = 7
@@ -59,8 +63,8 @@ def main():
             if idx % NUM_BOXES == 0:
                 prefix = ex["sentence_masked"].split(" <extra_id_0>")[0][:-15]
                 if chat:
-                    messages = prompt.get_prompt(prefix)
-                    response = model.chat_generate(messages)
+                    query = prompt.get_prompt(prefix)
+                    response = model.chat_generate(query)
                 else:
                     query = prompt.get_prompt(prefix)
                     response = model.generate(query)

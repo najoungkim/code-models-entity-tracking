@@ -22,7 +22,7 @@ class BasePrompt:
     input_prefix: str = "Description: "
     # Prefix for test output
     # no trailing space here since this can potentially mess up tokenization
-    output_prefix: str = "Statement:"
+    output_prefix: str = "Statement: "
 
     def prompt_prefix(self):
         """Prompt prefix with instruction and few-shot examples"""
@@ -33,7 +33,6 @@ class BasePrompt:
                 input_str +
                 self.io_separator +
                 self.output_prefix +
-                " " +
                 output_str +
                 self.example_separator
             )
@@ -74,6 +73,8 @@ class ChatPrompt(BasePrompt):
             messages.append({"role": "assistant", "content": "Okay."})
         elif "gemma" in self.model_str:
             messages.append({"role": "user", "content": self.instruction})
+            messages.append({"role": "assistant", "content": ""})
+            # pass
         else:
             messages.append({"role": "system", "content": self.instruction})
 
@@ -81,7 +82,7 @@ class ChatPrompt(BasePrompt):
             messages.append(
                 {"role": "user", "content": f"{self.input_prefix}{input_str}"})
             messages.append(
-                {"role": "assistant", "content": f"{self.output_prefix} {output_str}"})
+                {"role": "assistant", "content": f"{self.output_prefix}{output_str}"})
 
         return messages
 
