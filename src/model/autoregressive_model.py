@@ -17,32 +17,10 @@ class AutoregressiveModel(BaseModel):
             self.model_str, trust_remote_code=True)
         self.model = AutoModelForCausalLM.from_pretrained(
             self.model_str).to(device=device)
-        # self.pipeline = pipeline(
-        #     "text-generation",
-        #     model=model_str,
-        #     device=device,
-        # )
 
     def generate(self, prompt):
-        # add_special_tokens = False
-        # if "gemma" in self.model_str:
-        # add_special_tokens = True
-
-        # outputs = self.pipeline(
-        #     prompt,
-        #     max_new_tokens=256,
-        #     add_special_tokens=add_special_tokens,
-        #     do_sample=False,
-        #     temperature=None,
-        #     top_p=None
-        # )
-        # generated_text = outputs[0]["generated_text"]
-        # output_text = generated_text[len(prompt):]
-        # return output_text
-
         cur_input_ids = self.tokenizer(prompt)["input_ids"]
         num_prompt_tokens = len(cur_input_ids)
-        # cur_input_ids = list(input_ids)
 
         for box_id in range(NUM_BOXES):
             phrase = f" Box {box_id} contains"
@@ -62,17 +40,22 @@ class AutoregressiveModel(BaseModel):
             output_str = self.tokenizer.decode(
                 model_output[0][num_prefix_toks:])
             eos_token = "," if box_id < 6 else "."
-            if eos_token in output_str:
-                output_str = output_str[:output_str.index(eos_token) + 1]
-            else:
-                output_str = output_str + eos_token
 
+            # Trim the string to tokens like ",", "."
+            eos_cands = []
+            for eos_string in [",", "."]:
+                if eos_string in output_str:
+                    eos_cands.append(output_str.index(eos_string))
+
+            if len(eos_cands) > 0:
+                min_eos_idx = min(eos_cands)
+                output_str = output_str[:min_eos_idx]
+
+            output_str = output_str + eos_token
             cur_input_ids += self.tokenizer(output_str,
                                             add_special_tokens=False)["input_ids"]
 
-            # print(output_str)
-
-        output_str = "Statement:" + self.tokenizer.decode(
+        output_str = self.tokenizer.decode(
             cur_input_ids[num_prompt_tokens:], skip_special_tokens=True)
         # print(output_str)
         return output_str

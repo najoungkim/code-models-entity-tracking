@@ -6,6 +6,8 @@ import re
 
 import pandas as pd
 
+_RE_COMBINE_WHITESPACE = re.compile(r"\s+")
+
 
 def parse_args():
     """Parse arguments."""
@@ -48,10 +50,13 @@ if __name__ == "__main__":
                     cols["input"],
                 )
 
+                pred = pred.strip()
+                pred = _RE_COMBINE_WHITESPACE.sub(" ", pred).strip()
+
                 if "Statement:" in pred:
                     pred = pred.split("Statement:")[1]
-                    pred = pred.replace("Box 0 contains", "")
 
+                pred = pred.replace("Box 0 contains", "")
                 if "." in pred:
                     stop_idx = pred.index(".")
                     pred = pred[0:stop_idx]
