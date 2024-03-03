@@ -9,7 +9,12 @@ class AutoregressiveModel(BaseModel):
     """Wrapper class for Autoregressive models in HF."""
 
     def __init__(self, model_str, quantization_config, device="cpu", hf_key=None):
+<<<<<<< HEAD
         super().__init__(model_str=model_str,
+=======
+        super().__init__(
+            model_str=model_str,
+>>>>>>> d7ed306aa798904525fe72b5dbf6d1344be02839
             quantization_config=quantization_config,
             device=device,
             hf_key=None)
@@ -18,8 +23,12 @@ class AutoregressiveModel(BaseModel):
         self.model = AutoModelForCausalLM.from_pretrained(
             self.model_str,
             quantization_config=self.quantization_config,
+<<<<<<< HEAD
             use_auth_token=self.hf_key,
             torch_dtype=torch.float16 if self.quantization_config else None)
+=======
+            use_auth_token=self.hf_key)
+>>>>>>> d7ed306aa798904525fe72b5dbf6d1344be02839
         if self.quantization_config is None:
             self.model.to(self.device)
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_str, use_auth_token=self.hf_key)

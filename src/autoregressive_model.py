@@ -1,11 +1,13 @@
 import argparse
 import json
 import torch
+import transformers
 import os
 import pandas as pd
 
 import transformers
 from model.autoregressive_model import AutoregressiveModel
+from model.goat_model import GoatModel
 from prompt.base_prompt import ChatPrompt
 from prompt.prompt_library import TwoShotPrompt
 
@@ -20,7 +22,8 @@ def main():
     parser.add_argument("--dataset_path", type=str, required=True,
                         help="Path to a directory that contains files of the form {split}-t5.jsonl")
     parser.add_argument("--output_path", default=None, type=str, required=True)
-
+    parser.add_argument("--quantization", default=None, type=int)
+    parser.add_argument("--hf_key", default=None, type=str)
     parser.add_argument("--chat", action="store_true",
                         help="Set this flag for evaluating chat-based models")
     parser.add_argument("--quantization", default=None, type=int)
@@ -39,7 +42,7 @@ def main():
     quantization_config = None
     hf_key = None
     if args.quantization == 4:
-         quantization_config = transformers.BitsAndBytesConfig(
+        quantization_config = transformers.BitsAndBytesConfig(
             load_in_4bit=True,
             bnb_4bit_quant_type='nf4',
             bnb_4bit_use_double_quant=True,
@@ -51,6 +54,18 @@ def main():
             bnb_4bit_quant_type='nf4',
             bnb_4bit_use_double_quant=True,
             bnb_4bit_compute_dtype=torch.bfloat16
+    if 'goat' in args.model_name_or_checkpoint:
+        model = GoatModel(
+            args.model_name_or_checkpoint,
+            quantization_config=quantization_config,
+            device=device
+        )
+    else:
+        model = AutoregressiveModel(
+            args.model_name_or_checkpoint,
+            quantization_config=quantization_config,
+            device=device,
+            hf_key=hf_key
         )
 
     model = AutoregressiveModel(
