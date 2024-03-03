@@ -49,6 +49,10 @@ if __name__ == "__main__":
                     pred = pred.split("Statement:")[1]
                     pred = pred.replace("Box 0 contains", "")
 
+                if ".\nBox " in pred or ". Box " in pred:
+                    pred = pred.replace(".\nBox ", ", Box ", 6)
+                    pred = pred.replace(". Box ", ", Box ", 6)
+
                 if "." in pred:
                     stop_idx = pred.index(".")
                     pred = pred[0:stop_idx]
