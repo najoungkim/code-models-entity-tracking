@@ -23,7 +23,10 @@ class AutoregressiveModel(BaseModel):
         num_prompt_tokens = len(cur_input_ids)
 
         for box_id in range(NUM_BOXES):
-            phrase = f" Box {box_id} contains"
+            if box_id == 0:
+                phrase = "Statement: Box 0 contains"
+            else:
+                phrase = f" Box {box_id} contains"
             tokenized_phrase = self.tokenizer(
                 phrase, add_special_tokens=False)["input_ids"]
 
@@ -58,6 +61,7 @@ class AutoregressiveModel(BaseModel):
         output_str = self.tokenizer.decode(
             cur_input_ids[num_prompt_tokens:], skip_special_tokens=True)
         # print(output_str)
+        # print(self.tokenizer.decode(cur_input_ids, skip_special_tokens=False))
         return output_str
 
     def chat_generate(self, messages):
