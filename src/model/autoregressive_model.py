@@ -64,30 +64,6 @@ class AutoregressiveModel(BaseModel):
         # print(self.tokenizer.decode(cur_input_ids, skip_special_tokens=False))
         return output_str
 
-    def chat_generate(self, messages):
-        """Generate response for chat-optimized model"""
-        # if "gemma" in self.model_str:
-        #     inputs = self.tokenizer.apply_chat_template(
-        #         messages, tokenize=False, add_generation_prompt=True)
-        # else:
-        #
-        # add_special_tokens = False
-        # if "gemma" in self.model_str:
-        add_special_tokens = True
-        chat_fmt_prompt = self.tokenizer.apply_chat_template(
-            messages, tokenize=False, add_generation_prompt=True,
-            add_special_tokens=add_special_tokens
-        )
-
-        return self.generate(chat_fmt_prompt)
-        # input_len = inputs[0].shape[0]
-
-        # outputs = self.pipeline(inputs, max_new_tokens=256, add_special_tokens=True, do_sample=False)
-
-        # outputs =
-
-        # return output
-
 
 if __name__ == "__main__":
     from prompt.prompt_library import TwoShotPrompt

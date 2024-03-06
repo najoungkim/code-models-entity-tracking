@@ -3,3 +3,5 @@ __pycache__
 output/
 archive/
 launch.json
+local/
+notebooks/

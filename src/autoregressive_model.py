@@ -5,14 +5,15 @@ import json
 import os
 import torch
 import pandas as pd
+import outlines
 from tqdm import tqdm
 import transformers
 from transformers.utils import logging
-from transformers import pipeline
 
 from model.autoregressive_model import AutoregressiveModel
-from prompt.base_prompt import ChatPrompt
-from prompt.prompt_library import TwoShotPrompt, FourShotPrompt
+from prompt.base_prompt import BasePrompt
+from prompt.prompt_library import examples
+# from prompt.prompt_library import TwoShotPrompt
 
 import warnings
 warnings.filterwarnings('ignore', category=UserWarning,
@@ -20,6 +21,8 @@ warnings.filterwarnings('ignore', category=UserWarning,
 
 logging.set_verbosity(transformers.logging.CRITICAL)
 
+
+REGEX_EXPR = r"Box 0 contains( [a-zA-Z]+)*, Box 1 contains( [a-zA-Z]+)*, Box 2 contains( [a-zA-Z]+)*, Box 3 contains( [a-zA-Z]+)*, Box 4 contains( [a-zA-Z]+)*, Box 5 contains( [a-zA-Z]+)*, Box 6 contains( [a-zA-Z]+)*."
 NUM_BOXES = 7
 
 
@@ -40,13 +43,13 @@ def main():
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    prompt_class = TwoShotPrompt if args.k_shot == 2 else FourShotPrompt
-    chat = args.chat
-    if chat:
-        prompt = ChatPrompt(few_shot_examples=prompt_class.few_shot_examples,
-                            model_str=args.model_name_or_checkpoint)
-    else:
-        prompt = prompt_class
+    prompt = BasePrompt(examples=examples)
+    # chat = args.chat
+    # if chat:
+    #     prompt = ChatPrompt(few_shot_examples=prompt_class.few_shot_examples,
+    #                         model_str=args.model_name_or_checkpoint)
+    # else:
+    #     prompt = prompt_class
 
     # Load datasets from path
     test_df = pd.read_json(args.test_file, orient='records', lines=True)
@@ -55,20 +58,26 @@ def main():
     os.makedirs(args.output_path, exist_ok=True)
     predictions_path = os.path.join(args.output_path, "predictions.jsonl")
 
-    model = AutoregressiveModel(args.model_name_or_checkpoint, device=device)
+    # model = AutoregressiveModel(args.model_name_or_checkpoint, device=device)
+    model = outlines.models.transformers(
+        args.model_name_or_checkpoint, device=device)
 
     with open(predictions_path, "w", encoding="UTF-8") as out_f:
         for idx, ex in tqdm(test_df.iterrows(), total=len(test_df)):
             # test in condensed format, so only consider every BOX_NUMBERth entry
             if idx % NUM_BOXES == 0:
                 prefix = ex["sentence_masked"].split(" <extra_id_0>")[0][:-15]
-                if chat:
-                    query = prompt.get_prompt(prefix)
-                    response = model.chat_generate(query)
-                else:
-                    query = prompt.get_prompt(prefix)
-                    response = model.generate(query)
+                # if chat:
+                #     query = prompt.get_prompt(prefix)
+                #     response = model.chat_generate(query)
+                # else:
+                query = prompt.get_few_shot_prompt(prefix)
+                print(query)
+                # response = model.generate(query)
+                generator = outlines.generate.regex(model, REGEX_EXPR)
+                response = generator(query, max_tokens=100)
 
+                # print(response)
                 out = {"input": prefix, "prediction": response}
                 print(json.dumps(out), file=out_f)
 
