@@ -318,6 +318,17 @@ def main():
         accuracy=pd.NamedAgg("correct", lambda x: f"{x.mean() * 100.0:.2f}"),
         count=pd.NamedAgg("correct", lambda x: x.count())
     )
+
+    untouched_perf = float(res_ex[res_ex['numops_local'] == 0].agg(accuracy=pd.NamedAgg(
+        "correct", lambda x: f"{x.mean() * 100.0}"))["correct"].accuracy)
+
+    print(f"0 ops accuracy: {untouched_perf:.2f}")
+
+    touched_perf = float(res_ex[res_ex['numops_local'] >= 1].agg(accuracy=pd.NamedAgg(
+        "correct", lambda x: f"{x.mean() * 100.0:.2f}"))["correct"].accuracy)
+
+    print(f"1 + ops accuracy: {touched_perf:.2f}")
+
     print("#" * 80)
     print(f"{BOLD_START}Example accuracy by number of operations affecting box state:{BOLD_END}")
     print(acc_by_numops_local)

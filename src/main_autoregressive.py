@@ -41,6 +41,7 @@ def main():
     if transformers.utils.is_torch_bf16_gpu_available():
         model_kwargs["torch_dtype"] = torch.bfloat16
 
+    print(args.model_name)
     model = outlines.models.transformers(
         args.model_name, device=device, model_kwargs=model_kwargs)
 
