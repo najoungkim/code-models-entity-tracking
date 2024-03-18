@@ -5,3 +5,4 @@ archive/
 launch.json
 local/
 notebooks/
+wandb/

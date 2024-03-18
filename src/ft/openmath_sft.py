@@ -1,18 +1,18 @@
 import os
-import hf_olmo
+from hf_olmo import *
 from datasets import load_dataset
 from trl import SFTTrainer, DataCollatorForCompletionOnlyLM
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from transformers import TrainingArguments
 
-os.environ["WANDB_PROJECT"] = "entity_tracking"
+# os.environ["WANDB_PROJECT"] = "entity_tracking"
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 
 def load_math_dataset():
     dataset = load_dataset("nvidia/OpenMathInstruct-1")
-    train_dataset = dataset["train"]
+    train_dataset = dataset["validation"]
     corr_gsm8k_train = train_dataset.filter(
         lambda x: x["is_correct"] and x["dataset"] == "gsm8k")
 
@@ -37,20 +37,19 @@ def load_model():
 
 def get_training_args():
     # Args
-    max_seq_length = 1536
-    output_dir = "/home/stoshniwal/Research/entity_tracking/models/olmo_openmath_train_sft"
+    output_dir = "/home/stoshniwal/Research/entity_tracking/models/olmo_test_sft"
 
     per_device_train_batch_size = 8
     gradient_accumulation_steps = 128/(per_device_train_batch_size * 2)
 
     # Saving/Logging details
-    save_steps = 1000
+    save_steps = 100
     save_total_limit = 10
     logging_steps = 100
-    num_train_epochs = 2
+    num_train_epochs = 1
 
     # Optimizer
-    optim = "adamw_hf"
+    optim = "adamw_torch"
     learning_rate = 2e-5
     warmup_ratio = 0.03
     lr_scheduler_type = "linear"
@@ -72,10 +71,10 @@ def get_training_args():
         logging_steps=logging_steps,
         num_train_epochs=num_train_epochs,
 
-
-        # group_by_length=True,
+        ddp_find_unused_parameters=False,
         gradient_checkpointing=False,
-        report_to="wandb",
+        # report_to="wandb",
+        save_only_model=True,
     )
 
     return training_arguments
