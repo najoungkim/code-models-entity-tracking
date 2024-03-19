@@ -9,7 +9,6 @@ import pandas as pd
 import outlines
 from tqdm import tqdm
 import transformers
-from transformers import AutoTokenizer
 from transformers.utils import logging
 
 from prompt import construct_prompt
