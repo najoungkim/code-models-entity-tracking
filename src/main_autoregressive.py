@@ -37,11 +37,14 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     # Initialize model
-    model_kwargs = {"trust_remote_code": True}
-    if transformers.utils.is_torch_bf16_gpu_available():
-        model_kwargs["torch_dtype"] = torch.bfloat16
-
     print(args.model_name)
+    model_kwargs = {"trust_remote_code": True}
+    # Use 8 bits for 70B models
+    if "70b" in args.model_name:
+        model_kwargs["load_in_8bit"] = True
+    else:
+        if transformers.utils.is_torch_bf16_gpu_available():
+            model_kwargs["torch_dtype"] = torch.bfloat16
     model = outlines.models.transformers(
         args.model_name, device=device, model_kwargs=model_kwargs)
 
@@ -64,7 +67,7 @@ def main():
 
     with open(predictions_path, "w", encoding="UTF-8") as out_f:
         for idx, ex in tqdm(test_df.iterrows(), total=len(test_df)):
-            # test in condensed format, so only consider every BOX_NUMBERth entry
+            # Test in condensed format, so only consider every BOX_NUMBERth entry
             if idx % NUM_BOXES == 0:
                 prefix = ex["sentence_masked"].split(" <extra_id_0>")[0][:-15]
                 query = prompt.get_few_shot_prompt(prefix)
