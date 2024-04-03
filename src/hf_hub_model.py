@@ -8,14 +8,7 @@ from transformers import AutoTokenizer
 
 
 
-API_URL = "https://sf880f2hyeirmjq0.us-east-1.aws.endpoints.huggingface.cloud" 
-API_KEY = "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"
 
-HEADERS = {
-     "Accept" : "application/json",
-     "Authorization": f"Bearer {API_KEY}",
-     "Content-Type": "application/json" 
-}
 
 
 from prompt.base_prompt import ChatPrompt
@@ -35,9 +28,14 @@ def generate_hf_hub(args, input):
             "stop": ["\n"] if not args.chat else []
         }
     }
-
     
-    response = requests.post(API_URL, headers=HEADERS, json=payload)
+    headers = {
+      "Accept" : "application/json",
+      "Authorization": f"Bearer {args.hf_token}",
+      "Content-Type": "application/json"
+    }
+    
+    response = requests.post(args.hf_endpoint, headers=headers, json=payload)
     return response.json()[0]["generated_text"]
 
 
@@ -118,6 +116,14 @@ if __name__ == "__main__":
                         type=int,
                         default=512,
                         help="Maximum number of generated tokens (default: 512).")
+
+    parser.add_argument('--hf_token',
+                        type=str,
+                        help="HuggingFace access token")
+
+    parser.add_argument('--hf_endpoint',
+                        type=str,
+                        help="URL to HuggingFace Inference endpoint")
 
     args = parser.parse_args()
     main(args)
