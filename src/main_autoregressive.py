@@ -33,7 +33,7 @@ def main():
 
     args = parser.parse_args()
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    # device = "cuda" if torch.cuda.is_available() else "cpu"
 
     # Initialize model
     print(args.model_name)
@@ -45,7 +45,7 @@ def main():
         if transformers.utils.is_torch_bf16_gpu_available():
             model_kwargs["torch_dtype"] = torch.bfloat16
     model = outlines.models.transformers(
-        args.model_name, device=device, model_kwargs=model_kwargs)
+        args.model_name, device="auto", model_kwargs=model_kwargs)
 
     # Initialize prompt
     if args.chat:
