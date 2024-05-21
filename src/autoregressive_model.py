@@ -22,8 +22,6 @@ def main():
     parser.add_argument("--dataset_path", type=str, required=True,
                         help="Path to a directory that contains files of the form {split}-t5.jsonl")
     parser.add_argument("--output_path", default=None, type=str, required=True)
-    parser.add_argument("--quantization", default=None, type=int)
-    parser.add_argument("--hf_key", default=None, type=str)
     parser.add_argument("--chat", action="store_true",
                         help="Set this flag for evaluating chat-based models")
     parser.add_argument("--quantization", default=None, type=int)
