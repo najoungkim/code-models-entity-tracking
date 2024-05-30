@@ -6,3 +6,4 @@ launch.json
 local/
 notebooks/
 slurm_runs/
+*.out

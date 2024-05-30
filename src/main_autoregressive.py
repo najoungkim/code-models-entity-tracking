@@ -30,6 +30,8 @@ def main():
     parser.add_argument("--output_path", default=None, type=str, required=True)
     parser.add_argument("--chat", action="store_true",
                         help="Set this flag for evaluating chat-based models.")
+    parser.add_argument("--start_idx", default=None, type=int, help="Start index of instances.")
+    parser.add_argument("--max_instances", default=None, type=int, help="Number of instances.")
 
     args = parser.parse_args()
 
@@ -54,12 +56,21 @@ def main():
     else:
         prompt = construct_prompt()
 
-    # Load datasets from path
-    test_df = pd.read_json(args.test_file, orient='records', lines=True)
-
-    # Set output path
+    # Load datasets from path and set output path
     os.makedirs(args.output_path, exist_ok=True)
     predictions_path = os.path.join(args.output_path, "predictions.jsonl")
+    test_df = pd.read_json(args.test_file, orient='records', lines=True)
+
+    if args.start_idx:
+        start_idx = args.start_idx * NUM_BOXES
+        test_df = test_df.iloc[start_idx:]
+        predictions_path = os.path.join(args.output_path, f"predictions_start_{start_idx}.jsonl")
+
+    if args.max_instances:
+        max_instances = args.max_instances * NUM_BOXES
+        test_df = test_df.iloc[:max_instances]
+        predictions_path = os.path.join(args.output_path, f"predictions_max_{max_instances}.jsonl")
+    
 
     generator = outlines.generate.regex(
         model, REGEX_EXPR, sampler=outlines.samplers.GreedySampler())
