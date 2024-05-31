@@ -1,0 +1,305 @@
+model_name,num_ops,accuracy,count
+Gemma 2B (google/gemma-2b),0,59.63,1303
+Gemma 2B (google/gemma-2b),1,3.05,1410
+Gemma 2B (google/gemma-2b),2,5.08,1083
+Gemma 2B (google/gemma-2b),3,1.69,651
+Gemma 2B (google/gemma-2b),4,0.69,288
+Gemma 2B (google/gemma-2b),5,2.82,142
+Gemma 2B (google/gemma-2b),6,1.89,106
+Gemma 2B (google/gemma-2b),7,0.00,29
+Gemma 2B Instruction (google/gemma-2b-it),0,83.42,1303
+Gemma 2B Instruction (google/gemma-2b-it),1,4.40,1410
+Gemma 2B Instruction (google/gemma-2b-it),2,8.40,1083
+Gemma 2B Instruction (google/gemma-2b-it),3,3.07,651
+Gemma 2B Instruction (google/gemma-2b-it),4,3.47,288
+Gemma 2B Instruction (google/gemma-2b-it),5,1.41,142
+Gemma 2B Instruction (google/gemma-2b-it),6,2.83,106
+Gemma 2B Instruction (google/gemma-2b-it),7,0.00,29
+OLMo-1B (allenai/OLMo-1B),0,93.86,1303
+OLMo-1B (allenai/OLMo-1B),1,0.00,1410
+OLMo-1B (allenai/OLMo-1B),2,10.71,1083
+OLMo-1B (allenai/OLMo-1B),3,2.92,651
+OLMo-1B (allenai/OLMo-1B),4,5.21,288
+OLMo-1B (allenai/OLMo-1B),5,2.82,142
+OLMo-1B (allenai/OLMo-1B),6,0.94,106
+OLMo-1B (allenai/OLMo-1B),7,3.45,29
+Microsoft Phi-1.5 (microsoft/phi-1_5),0,90.48,1303
+Microsoft Phi-1.5 (microsoft/phi-1_5),1,1.42,1410
+Microsoft Phi-1.5 (microsoft/phi-1_5),2,11.17,1083
+Microsoft Phi-1.5 (microsoft/phi-1_5),3,3.99,651
+Microsoft Phi-1.5 (microsoft/phi-1_5),4,5.56,288
+Microsoft Phi-1.5 (microsoft/phi-1_5),5,2.82,142
+Microsoft Phi-1.5 (microsoft/phi-1_5),6,1.89,106
+Microsoft Phi-1.5 (microsoft/phi-1_5),7,3.45,29
+Microsoft Phi-2 (microsoft/phi-2),0,88.72,1303
+Microsoft Phi-2 (microsoft/phi-2),1,31.56,1410
+Microsoft Phi-2 (microsoft/phi-2),2,22.44,1083
+Microsoft Phi-2 (microsoft/phi-2),3,14.75,651
+Microsoft Phi-2 (microsoft/phi-2),4,9.38,288
+Microsoft Phi-2 (microsoft/phi-2),5,8.45,142
+Microsoft Phi-2 (microsoft/phi-2),6,11.32,106
+Microsoft Phi-2 (microsoft/phi-2),7,10.34,29
+OLMo-7B (allenai/OLMo-7B),0,91.63,1303
+OLMo-7B (allenai/OLMo-7B),1,0.35,1410
+OLMo-7B (allenai/OLMo-7B),2,9.14,1083
+OLMo-7B (allenai/OLMo-7B),3,3.07,651
+OLMo-7B (allenai/OLMo-7B),4,5.21,288
+OLMo-7B (allenai/OLMo-7B),5,1.41,142
+OLMo-7B (allenai/OLMo-7B),6,0.94,106
+OLMo-7B (allenai/OLMo-7B),7,3.45,29
+Gemma-7B (google/gemma-7b),0,95.78,1303
+Gemma-7B (google/gemma-7b),1,45.82,1410
+Gemma-7B (google/gemma-7b),2,14.04,1083
+Gemma-7B (google/gemma-7b),3,8.60,651
+Gemma-7B (google/gemma-7b),4,5.56,288
+Gemma-7B (google/gemma-7b),5,7.75,142
+Gemma-7B (google/gemma-7b),6,7.55,106
+Gemma-7B (google/gemma-7b),7,3.45,29
+LLAMA2-7B (meta-llama/Llama-2-7b-hf),0,65.54,1303
+LLAMA2-7B (meta-llama/Llama-2-7b-hf),1,4.96,1410
+LLAMA2-7B (meta-llama/Llama-2-7b-hf),2,7.94,1083
+LLAMA2-7B (meta-llama/Llama-2-7b-hf),3,4.30,651
+LLAMA2-7B (meta-llama/Llama-2-7b-hf),4,5.56,288
+LLAMA2-7B (meta-llama/Llama-2-7b-hf),5,4.93,142
+LLAMA2-7B (meta-llama/Llama-2-7b-hf),6,5.66,106
+LLAMA2-7B (meta-llama/Llama-2-7b-hf),7,3.45,29
+LLAMA2-7B-chat (meta-llama/Llama-2-7b-chat-hf),0,87.95,1303
+LLAMA2-7B-chat (meta-llama/Llama-2-7b-chat-hf),1,35.53,1410
+LLAMA2-7B-chat (meta-llama/Llama-2-7b-chat-hf),2,24.38,1083
+LLAMA2-7B-chat (meta-llama/Llama-2-7b-chat-hf),3,14.29,651
+LLAMA2-7B-chat (meta-llama/Llama-2-7b-chat-hf),4,12.15,288
+LLAMA2-7B-chat (meta-llama/Llama-2-7b-chat-hf),5,14.79,142
+LLAMA2-7B-chat (meta-llama/Llama-2-7b-chat-hf),6,7.55,106
+LLAMA2-7B-chat (meta-llama/Llama-2-7b-chat-hf),7,3.45,29
+Code Llama 7B (codellama/CodeLlama-7b-hf),0,90.87,1303
+Code Llama 7B (codellama/CodeLlama-7b-hf),1,13.69,1410
+Code Llama 7B (codellama/CodeLlama-7b-hf),2,12.28,1083
+Code Llama 7B (codellama/CodeLlama-7b-hf),3,7.99,651
+Code Llama 7B (codellama/CodeLlama-7b-hf),4,6.60,288
+Code Llama 7B (codellama/CodeLlama-7b-hf),5,4.93,142
+Code Llama 7B (codellama/CodeLlama-7b-hf),6,8.49,106
+Code Llama 7B (codellama/CodeLlama-7b-hf),7,13.79,29
+Code Llama 7B Instruct (codellama/CodeLlama-7b-Instruct-hf),0,96.16,1303
+Code Llama 7B Instruct (codellama/CodeLlama-7b-Instruct-hf),1,36.03,1410
+Code Llama 7B Instruct (codellama/CodeLlama-7b-Instruct-hf),2,18.19,1083
+Code Llama 7B Instruct (codellama/CodeLlama-7b-Instruct-hf),3,12.29,651
+Code Llama 7B Instruct (codellama/CodeLlama-7b-Instruct-hf),4,6.60,288
+Code Llama 7B Instruct (codellama/CodeLlama-7b-Instruct-hf),5,5.63,142
+Code Llama 7B Instruct (codellama/CodeLlama-7b-Instruct-hf),6,3.77,106
+Code Llama 7B Instruct (codellama/CodeLlama-7b-Instruct-hf),7,10.34,29
+Mistral 7B (mistralai/Mistral-7B-v0.1),0,96.01,1303
+Mistral 7B (mistralai/Mistral-7B-v0.1),1,50.28,1410
+Mistral 7B (mistralai/Mistral-7B-v0.1),2,18.56,1083
+Mistral 7B (mistralai/Mistral-7B-v0.1),3,11.37,651
+Mistral 7B (mistralai/Mistral-7B-v0.1),4,8.68,288
+Mistral 7B (mistralai/Mistral-7B-v0.1),5,12.68,142
+Mistral 7B (mistralai/Mistral-7B-v0.1),6,7.55,106
+Mistral 7B (mistralai/Mistral-7B-v0.1),7,10.34,29
+Mistral 7B Instruct (mistralai/Mistral-7B-Instruct-v0.2),0,86.72,1303
+Mistral 7B Instruct (mistralai/Mistral-7B-Instruct-v0.2),1,51.70,1410
+Mistral 7B Instruct (mistralai/Mistral-7B-Instruct-v0.2),2,24.01,1083
+Mistral 7B Instruct (mistralai/Mistral-7B-Instruct-v0.2),3,18.43,651
+Mistral 7B Instruct (mistralai/Mistral-7B-Instruct-v0.2),4,14.24,288
+Mistral 7B Instruct (mistralai/Mistral-7B-Instruct-v0.2),5,12.68,142
+Mistral 7B Instruct (mistralai/Mistral-7B-Instruct-v0.2),6,16.98,106
+Mistral 7B Instruct (mistralai/Mistral-7B-Instruct-v0.2),7,17.24,29
+Deepseek 7B (deepseek-ai/deepseek-llm-7b-base),0,71.83,1303
+Deepseek 7B (deepseek-ai/deepseek-llm-7b-base),1,8.44,1410
+Deepseek 7B (deepseek-ai/deepseek-llm-7b-base),2,7.29,1083
+Deepseek 7B (deepseek-ai/deepseek-llm-7b-base),3,4.61,651
+Deepseek 7B (deepseek-ai/deepseek-llm-7b-base),4,1.04,288
+Deepseek 7B (deepseek-ai/deepseek-llm-7b-base),5,2.11,142
+Deepseek 7B (deepseek-ai/deepseek-llm-7b-base),6,3.77,106
+Deepseek 7B (deepseek-ai/deepseek-llm-7b-base),7,6.90,29
+Deepseek 7B Chat (deepseek-ai/deepseek-llm-7b-chat),0,70.30,1303
+Deepseek 7B Chat (deepseek-ai/deepseek-llm-7b-chat),1,27.30,1410
+Deepseek 7B Chat (deepseek-ai/deepseek-llm-7b-chat),2,17.27,1083
+Deepseek 7B Chat (deepseek-ai/deepseek-llm-7b-chat),3,11.21,651
+Deepseek 7B Chat (deepseek-ai/deepseek-llm-7b-chat),4,11.81,288
+Deepseek 7B Chat (deepseek-ai/deepseek-llm-7b-chat),5,9.15,142
+Deepseek 7B Chat (deepseek-ai/deepseek-llm-7b-chat),6,6.60,106
+Deepseek 7B Chat (deepseek-ai/deepseek-llm-7b-chat),7,3.45,29
+Deepseek 7B Coder Base (deepseek-ai/deepseek-coder-7b-base-v1.5),0,97.16,1303
+Deepseek 7B Coder Base (deepseek-ai/deepseek-coder-7b-base-v1.5),1,57.52,1410
+Deepseek 7B Coder Base (deepseek-ai/deepseek-coder-7b-base-v1.5),2,33.61,1083
+Deepseek 7B Coder Base (deepseek-ai/deepseek-coder-7b-base-v1.5),3,23.96,651
+Deepseek 7B Coder Base (deepseek-ai/deepseek-coder-7b-base-v1.5),4,19.10,288
+Deepseek 7B Coder Base (deepseek-ai/deepseek-coder-7b-base-v1.5),5,17.61,142
+Deepseek 7B Coder Base (deepseek-ai/deepseek-coder-7b-base-v1.5),6,8.49,106
+Deepseek 7B Coder Base (deepseek-ai/deepseek-coder-7b-base-v1.5),7,13.79,29
+Deepseek 7B Coder Instruction (deepseek-ai/deepseek-coder-7b-instruct-v1.5),0,91.71,1303
+Deepseek 7B Coder Instruction (deepseek-ai/deepseek-coder-7b-instruct-v1.5),1,54.54,1410
+Deepseek 7B Coder Instruction (deepseek-ai/deepseek-coder-7b-instruct-v1.5),2,26.41,1083
+Deepseek 7B Coder Instruction (deepseek-ai/deepseek-coder-7b-instruct-v1.5),3,18.13,651
+Deepseek 7B Coder Instruction (deepseek-ai/deepseek-coder-7b-instruct-v1.5),4,13.89,288
+Deepseek 7B Coder Instruction (deepseek-ai/deepseek-coder-7b-instruct-v1.5),5,11.27,142
+Deepseek 7B Coder Instruction (deepseek-ai/deepseek-coder-7b-instruct-v1.5),6,17.92,106
+Deepseek 7B Coder Instruction (deepseek-ai/deepseek-coder-7b-instruct-v1.5),7,3.45,29
+Deepseek 7B MATH Base (deepseek-ai/deepseek-math-7b-base),0,98.93,1303
+Deepseek 7B MATH Base (deepseek-ai/deepseek-math-7b-base),1,60.28,1410
+Deepseek 7B MATH Base (deepseek-ai/deepseek-math-7b-base),2,35.73,1083
+Deepseek 7B MATH Base (deepseek-ai/deepseek-math-7b-base),3,26.73,651
+Deepseek 7B MATH Base (deepseek-ai/deepseek-math-7b-base),4,24.65,288
+Deepseek 7B MATH Base (deepseek-ai/deepseek-math-7b-base),5,16.20,142
+Deepseek 7B MATH Base (deepseek-ai/deepseek-math-7b-base),6,23.58,106
+Deepseek 7B MATH Base (deepseek-ai/deepseek-math-7b-base),7,27.59,29
+OpenMathMistral (nvidia/OpenMath-Mistral-7B-v0.1-hf),0,90.94,1303
+OpenMathMistral (nvidia/OpenMath-Mistral-7B-v0.1-hf),1,34.40,1410
+OpenMathMistral (nvidia/OpenMath-Mistral-7B-v0.1-hf),2,14.22,1083
+OpenMathMistral (nvidia/OpenMath-Mistral-7B-v0.1-hf),3,8.76,651
+OpenMathMistral (nvidia/OpenMath-Mistral-7B-v0.1-hf),4,5.90,288
+OpenMathMistral (nvidia/OpenMath-Mistral-7B-v0.1-hf),5,4.93,142
+OpenMathMistral (nvidia/OpenMath-Mistral-7B-v0.1-hf),6,5.66,106
+OpenMathMistral (nvidia/OpenMath-Mistral-7B-v0.1-hf),7,20.69,29
+Llama 13B (meta-llama/Llama-2-13b-hf),0,77.05,1303
+Llama 13B (meta-llama/Llama-2-13b-hf),1,25.18,1410
+Llama 13B (meta-llama/Llama-2-13b-hf),2,15.97,1083
+Llama 13B (meta-llama/Llama-2-13b-hf),3,12.75,651
+Llama 13B (meta-llama/Llama-2-13b-hf),4,8.68,288
+Llama 13B (meta-llama/Llama-2-13b-hf),5,8.45,142
+Llama 13B (meta-llama/Llama-2-13b-hf),6,10.38,106
+Llama 13B (meta-llama/Llama-2-13b-hf),7,17.24,29
+Llama 13B Chat (meta-llama/Llama-2-13b-chat-hf),0,77.51,1303
+Llama 13B Chat (meta-llama/Llama-2-13b-chat-hf),1,36.67,1410
+Llama 13B Chat (meta-llama/Llama-2-13b-chat-hf),2,19.94,1083
+Llama 13B Chat (meta-llama/Llama-2-13b-chat-hf),3,16.28,651
+Llama 13B Chat (meta-llama/Llama-2-13b-chat-hf),4,9.03,288
+Llama 13B Chat (meta-llama/Llama-2-13b-chat-hf),5,11.27,142
+Llama 13B Chat (meta-llama/Llama-2-13b-chat-hf),6,11.32,106
+Llama 13B Chat (meta-llama/Llama-2-13b-chat-hf),7,13.79,29
+CodeLlama 13B (codellama/CodeLlama-13b-hf),0,95.70,1303
+CodeLlama 13B (codellama/CodeLlama-13b-hf),1,60.78,1410
+CodeLlama 13B (codellama/CodeLlama-13b-hf),2,32.87,1083
+CodeLlama 13B (codellama/CodeLlama-13b-hf),3,25.35,651
+CodeLlama 13B (codellama/CodeLlama-13b-hf),4,20.14,288
+CodeLlama 13B (codellama/CodeLlama-13b-hf),5,21.83,142
+CodeLlama 13B (codellama/CodeLlama-13b-hf),6,26.42,106
+CodeLlama 13B (codellama/CodeLlama-13b-hf),7,13.79,29
+CodeLlama 13B Instruct (codellama/CodeLlama-13b-Instruct-hf),0,97.77,1303
+CodeLlama 13B Instruct (codellama/CodeLlama-13b-Instruct-hf),1,71.13,1410
+CodeLlama 13B Instruct (codellama/CodeLlama-13b-Instruct-hf),2,35.83,1083
+CodeLlama 13B Instruct (codellama/CodeLlama-13b-Instruct-hf),3,23.35,651
+CodeLlama 13B Instruct (codellama/CodeLlama-13b-Instruct-hf),4,17.01,288
+CodeLlama 13B Instruct (codellama/CodeLlama-13b-Instruct-hf),5,14.79,142
+CodeLlama 13B Instruct (codellama/CodeLlama-13b-Instruct-hf),6,19.81,106
+CodeLlama 13B Instruct (codellama/CodeLlama-13b-Instruct-hf),7,20.69,29
+CodeLlama 34B (codellama/CodeLlama-34b-hf),0,94.70,1303
+CodeLlama 34B (codellama/CodeLlama-34b-hf),1,71.28,1410
+CodeLlama 34B (codellama/CodeLlama-34b-hf),2,33.89,1083
+CodeLlama 34B (codellama/CodeLlama-34b-hf),3,31.18,651
+CodeLlama 34B (codellama/CodeLlama-34b-hf),4,21.53,288
+CodeLlama 34B (codellama/CodeLlama-34b-hf),5,14.79,142
+CodeLlama 34B (codellama/CodeLlama-34b-hf),6,19.81,106
+CodeLlama 34B (codellama/CodeLlama-34b-hf),7,24.14,29
+Deepseek Coder 33B (deepseek-ai/deepseek-coder-33b-base),0,91.94,1303
+Deepseek Coder 33B (deepseek-ai/deepseek-coder-33b-base),1,63.97,1410
+Deepseek Coder 33B (deepseek-ai/deepseek-coder-33b-base),2,35.92,1083
+Deepseek Coder 33B (deepseek-ai/deepseek-coder-33b-base),3,27.80,651
+Deepseek Coder 33B (deepseek-ai/deepseek-coder-33b-base),4,18.06,288
+Deepseek Coder 33B (deepseek-ai/deepseek-coder-33b-base),5,19.72,142
+Deepseek Coder 33B (deepseek-ai/deepseek-coder-33b-base),6,19.81,106
+Deepseek Coder 33B (deepseek-ai/deepseek-coder-33b-base),7,13.79,29
+Llama-2 70B (meta-llama/Llama-2-70b-hf),0,99.00,1303
+Llama-2 70B (meta-llama/Llama-2-70b-hf),1,71.91,1410
+Llama-2 70B (meta-llama/Llama-2-70b-hf),2,43.67,1083
+Llama-2 70B (meta-llama/Llama-2-70b-hf),3,31.18,651
+Llama-2 70B (meta-llama/Llama-2-70b-hf),4,21.88,288
+Llama-2 70B (meta-llama/Llama-2-70b-hf),5,25.35,142
+Llama-2 70B (meta-llama/Llama-2-70b-hf),6,25.47,106
+Llama-2 70B (meta-llama/Llama-2-70b-hf),7,27.59,29
+CodeLlama 70B Instruct (codellama/CodeLlama-70b-Instruct-hf),0,98.70,1303
+CodeLlama 70B Instruct (codellama/CodeLlama-70b-Instruct-hf),1,83.40,1410
+CodeLlama 70B Instruct (codellama/CodeLlama-70b-Instruct-hf),2,59.65,1083
+CodeLlama 70B Instruct (codellama/CodeLlama-70b-Instruct-hf),3,51.92,651
+CodeLlama 70B Instruct (codellama/CodeLlama-70b-Instruct-hf),4,46.18,288
+CodeLlama 70B Instruct (codellama/CodeLlama-70b-Instruct-hf),5,40.85,142
+CodeLlama 70B Instruct (codellama/CodeLlama-70b-Instruct-hf),6,39.62,106
+CodeLlama 70B Instruct (codellama/CodeLlama-70b-Instruct-hf),7,44.83,29
+CodeLlama 70B (codellama/CodeLlama-70b-hf),0,99.39,1303
+CodeLlama 70B (codellama/CodeLlama-70b-hf),1,76.60,1410
+CodeLlama 70B (codellama/CodeLlama-70b-hf),2,54.20,1083
+CodeLlama 70B (codellama/CodeLlama-70b-hf),3,47.31,651
+CodeLlama 70B (codellama/CodeLlama-70b-hf),4,40.97,288
+CodeLlama 70B (codellama/CodeLlama-70b-hf),5,36.62,142
+CodeLlama 70B (codellama/CodeLlama-70b-hf),6,43.40,106
+CodeLlama 70B (codellama/CodeLlama-70b-hf),7,37.93,29
+Llama-2 70B Chat (meta-llama/Llama-2-70b-chat-hf),0,93.25,1303
+Llama-2 70B Chat (meta-llama/Llama-2-70b-chat-hf),1,75.67,1410
+Llama-2 70B Chat (meta-llama/Llama-2-70b-chat-hf),2,47.00,1083
+Llama-2 70B Chat (meta-llama/Llama-2-70b-chat-hf),3,37.33,651
+Llama-2 70B Chat (meta-llama/Llama-2-70b-chat-hf),4,26.39,288
+Llama-2 70B Chat (meta-llama/Llama-2-70b-chat-hf),5,22.54,142
+Llama-2 70B Chat (meta-llama/Llama-2-70b-chat-hf),6,24.53,106
+Llama-2 70B Chat (meta-llama/Llama-2-70b-chat-hf),7,37.93,29
+Llemma 34B (EleutherAI/llemma_34b),0,95.24,1303
+Llemma 34B (EleutherAI/llemma_34b),1,75.60,1410
+Llemma 34B (EleutherAI/llemma_34b),2,36.10,1083
+Llemma 34B (EleutherAI/llemma_34b),3,31.64,651
+Llemma 34B (EleutherAI/llemma_34b),4,21.53,288
+Llemma 34B (EleutherAI/llemma_34b),5,14.79,142
+Llemma 34B (EleutherAI/llemma_34b),6,21.70,106
+Llemma 34B (EleutherAI/llemma_34b),7,20.69,29
+Llemma 7B (EleutherAI/llemma_7b),0,84.65,1303
+Llemma 7B (EleutherAI/llemma_7b),1,26.81,1410
+Llemma 7B (EleutherAI/llemma_7b),2,13.20,1083
+Llemma 7B (EleutherAI/llemma_7b),3,8.29,651
+Llemma 7B (EleutherAI/llemma_7b),4,4.51,288
+Llemma 7B (EleutherAI/llemma_7b),5,6.34,142
+Llemma 7B (EleutherAI/llemma_7b),6,9.43,106
+Llemma 7B (EleutherAI/llemma_7b),7,0.00,29
+Float 7B Instruct (nikhil07prakash/float-7b),0,89.33,1303
+Float 7B Instruct (nikhil07prakash/float-7b),1,1.56,1410
+Float 7B Instruct (nikhil07prakash/float-7b),2,12.37,1083
+Float 7B Instruct (nikhil07prakash/float-7b),3,5.07,651
+Float 7B Instruct (nikhil07prakash/float-7b),4,5.21,288
+Float 7B Instruct (nikhil07prakash/float-7b),5,2.82,142
+Float 7B Instruct (nikhil07prakash/float-7b),6,4.72,106
+Float 7B Instruct (nikhil07prakash/float-7b),7,13.79,29
+LLama 7B (huggyllama/llama-7b),0,97.93,1303
+LLama 7B (huggyllama/llama-7b),1,0.71,1410
+LLama 7B (huggyllama/llama-7b),2,10.53,1083
+LLama 7B (huggyllama/llama-7b),3,2.92,651
+LLama 7B (huggyllama/llama-7b),4,3.82,288
+LLama 7B (huggyllama/llama-7b),5,3.52,142
+LLama 7B (huggyllama/llama-7b),6,0.94,106
+LLama 7B (huggyllama/llama-7b),7,3.45,29
+Random (random/random),0,41.0568,1303003
+Random (random/random),1,17.8475,1410000
+Random (random/random),2,12.6981,1083003
+Random (random/random),3,11.8694,65100
+Random (random/random),4,10.5764,28800
+Random (random/random),5,9.1620,14200
+Random (random/random),6,7.5094,10600
+Random (random/random),7,12.5862,2900
+Gemma-7B (google/gemma-7b),0,95.78,1303
+Gemma-7B (google/gemma-7b),1,45.82,1410
+Gemma-7B (google/gemma-7b),2,14.04,1083
+Gemma-7B (google/gemma-7b),3,8.60,651
+Gemma-7B (google/gemma-7b),4,5.56,288
+Gemma-7B (google/gemma-7b),5,7.75,142
+Gemma-7B (google/gemma-7b),6,7.55,106
+Gemma-7B (google/gemma-7b),7,3.45,29
+CodeGemma-7B (google/codegemma-7b),0,91.33,1303
+CodeGemma-7B (google/codegemma-7b),1,53.76,1410
+CodeGemma-7B (google/codegemma-7b),2,21.70,1083
+CodeGemma-7B (google/codegemma-7b),3,13.67,651
+CodeGemma-7B (google/codegemma-7b),4,6.94,288
+CodeGemma-7B (google/codegemma-7b),5,5.63,142
+CodeGemma-7B (google/codegemma-7b),6,8.49,106
+CodeGemma-7B (google/codegemma-7b),7,3.45,29
+CodeGemma-7B Instruct (google/codegemma-7b-it),0,93.48,1303
+CodeGemma-7B Instruct (google/codegemma-7b-it),1,69.57,1410
+CodeGemma-7B Instruct (google/codegemma-7b-it),2,26.22,1083
+CodeGemma-7B Instruct (google/codegemma-7b-it),3,19.82,651
+CodeGemma-7B Instruct (google/codegemma-7b-it),4,12.50,288
+CodeGemma-7B Instruct (google/codegemma-7b-it),5,12.68,142
+CodeGemma-7B Instruct (google/codegemma-7b-it),6,11.32,106
+CodeGemma-7B Instruct (google/codegemma-7b-it),7,10.34,29
+Gemma-7B Instruct (google/gemma-7b-it),0,93.25,1303
+Gemma-7B Instruct (google/gemma-7b-it),1,55.96,1410
+Gemma-7B Instruct (google/gemma-7b-it),2,21.98,1083
+Gemma-7B Instruct (google/gemma-7b-it),3,15.51,651
+Gemma-7B Instruct (google/gemma-7b-it),4,7.99,288
+Gemma-7B Instruct (google/gemma-7b-it),5,8.45,142
+Gemma-7B Instruct (google/gemma-7b-it),6,11.32,106
+Gemma-7B Instruct (google/gemma-7b-it),7,17.24,29
