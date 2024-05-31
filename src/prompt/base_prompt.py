@@ -6,7 +6,7 @@ class BasePrompt:
     """Base prompt class."""
 
     # Task instruction string
-    instruction: str = "Given the description after \"Description:\", write a true statement about all boxes and their contents to the description after \"Statement:\"."
+    instruction: str = "Given the description after \"Description:\", write a true statement about all boxes and their contents according to the description after \"Statement:\"."
     # List of few-shot input-output string pairs
     few_shot_examples: list = field(default_factory=list)
 
