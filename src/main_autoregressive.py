@@ -70,7 +70,7 @@ def main():
             if idx % NUM_BOXES == 0:
                 prefix = ex["sentence_masked"].split(" <extra_id_0>")[0][:-15]
                 query = prompt.get_few_shot_prompt(prefix)
-                response = generator(query, max_tokens=100)
+                response = generator(query, max_tokens=1000)
 
                 out = {"input": prefix, "prediction": response}
                 print(json.dumps(out), file=out_f)

@@ -44,22 +44,22 @@ if __name__ == "__main__":
 
             if i % args.num_boxes == 0:
                 cols = pred_df.iloc[i // args.num_boxes]
-                pred, context = (
+                pred, context = ( #split prediction (statement) and input
                     # cols["target"],
                     cols["prediction"],
                     cols["input"],
                 )
 
-                pred = pred.strip()
+                pred = pred.strip() # prediction
                 pred = _RE_COMBINE_WHITESPACE.sub(" ", pred).strip()
 
                 if "Statement:" in pred:
-                    pred = pred.split("Statement:")[1]
+                    pred = pred.split("Statement:")[1] # leaves additional white space
 
-                pred = pred.replace("Box 0 contains", "")
+                pred = pred.replace("Box 0 contains", "") # leaves additional white space
                 if "." in pred:
                     stop_idx = pred.index(".")
-                    pred = pred[0:stop_idx]
+                    pred = pred[0:stop_idx] #gets rid of ending period
 
                 if "Box " in pred:
                     indiv_predictions = re.split(
