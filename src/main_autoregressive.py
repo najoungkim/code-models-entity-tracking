@@ -59,6 +59,45 @@ def main():
 
     # Set output path
     os.makedirs(args.output_path, exist_ok=True)
+    predictions_move_path = os.path.join(args.output_path, "predictions_move.jsonl")
+    predictions_no_move_path = os.path.join(args.output_path, "predictions_no_move.jsonl")
+
+    generator = outlines.generate.regex(
+        model, REGEX_EXPR, sampler=outlines.samplers.GreedySampler())
+
+    with open(predictions_move_path, "w", encoding="UTF-8") as move_f, open(predictions_no_move_path, "w", encoding="UTF-8") as no_move_f:
+        for idx, ex in tqdm(test_df.iterrows(), total=len(test_df)):
+            # Test in condensed format, so only consider every BOX_NUMBERth entry
+            if idx % NUM_BOXES == 0:
+                prefix = ex["sentence_masked"].split(" <extra_id_0>")[0][:-15]
+                query = prompt.get_few_shot_prompt(prefix)
+                response = generator(query, max_tokens=1000)
+                
+                out = {"input": prefix, "prediction": response}
+                
+                # response and prefix input or out? figure out which parameters
+                if contains_move(response):
+                    print(json.dumps(out), file=move_f) # true if a box is affected by move contents spplit, even if it ends up in the right place
+                else:
+                    print(json.dumps(out), file=no_move_f)
+
+    def contains_move(response):
+        """
+        Checks if the box is affected by move
+
+        Parameters:
+        response (string):
+
+        Returns:
+        boolean: whether the box is affected by move
+        """
+        # TO-DO
+        print("Hello")
+
+    """
+    ORIGINAL
+    # Set output path
+    os.makedirs(args.output_path, exist_ok=True)
     predictions_path = os.path.join(args.output_path, "predictions.jsonl")
 
     generator = outlines.generate.regex(
@@ -74,7 +113,7 @@ def main():
 
                 out = {"input": prefix, "prediction": response}
                 print(json.dumps(out), file=out_f)
-
+    """
 
 if __name__ == "__main__":
     main()
