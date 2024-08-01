@@ -25,6 +25,7 @@ def parse_intial_states(first_context, zero_shot=False):
     Returns:
         _type_: A dictionary with the box name as the key and the contents as value.
     """
+    # states is not implemented for move split
     parts = first_context.split(", ")
     states = {}
     if zero_shot:
@@ -65,7 +66,8 @@ def parse_intial_states(first_context, zero_shot=False):
     return states
 
 
-def compute_metrics(file_path, gold_file_path=None, zero_shot=False):
+def compute_metrics(file_path, gold_file_path=None, zero_shot=False, split=None):
+    # pass in split and skip until gold data num ops is ok
     """ Computes detailed metrics for each example
 
     Args:
@@ -87,6 +89,9 @@ def compute_metrics(file_path, gold_file_path=None, zero_shot=False):
     total = 0
     rows = []
     rows_state = []
+
+    move_rows = []
+    no_move_rows = []
 
     is_jsonl = file_path[-6:] == ".jsonl"
     df = pd.read_json(file_path, orient="records",
@@ -139,7 +144,7 @@ def compute_metrics(file_path, gold_file_path=None, zero_shot=False):
             gold = gold.replace(f"{mod} ", f"{mod}_")
             pred = pred.replace(f"{mod} ", f"{mod}_")
 
-        # compute global numops
+        # compute global numops - total numops while local is unique operations
         row["numops_global"] = gold_data["sentence"][:-1].count(".") - 1
         row_state["numops_global"] = row["numops_global"]
 
@@ -200,11 +205,12 @@ def compute_metrics(file_path, gold_file_path=None, zero_shot=False):
                         # else:
                         #    print(f"'{gold_item_type}' // {op_string}")
 
-        move_ops1 = re.findall(
-            f"Move the contents of Box [0-9] to Box {box_no}", gold_data["sentence"])
+        #move_ops1 = re.findall(
+            #f"Move the contents of Box [0-9] to Box {box_no}", gold_data["sentence"])
+        move_ops1 = gold_data["numops_by_op"]["move"]
         # move_ops2 = re.findall(f"Move the contents of Box {box_no} to Box [0-9]", gold_data["sentence"])
 
-        involves_move_content = len(move_ops1) > 0  # or len(move_ops2) > 0
+        involves_move_content = move_ops1 > 0  # or len(move_ops2) > 0
 
         if pred.replace("the", "") == gold.replace(" the", ""):
             pred = pred.replace("the", "")
@@ -234,7 +240,7 @@ def compute_metrics(file_path, gold_file_path=None, zero_shot=False):
             row_state["correct"] = 0
             row["correct"] = 0
 
-        if gold == initial_state[box_key]:
+        if gold == initial_state[box_key]: #get rid of contains?
             row["eq_initial"] = 1
             row["initial_state_required"] = 1
         else:
@@ -267,8 +273,13 @@ def compute_metrics(file_path, gold_file_path=None, zero_shot=False):
             row["recall"] = float(tp) / len(gold_items)
             if row["precision"] < 1:
                 row["hallucinated"] = 1
-
+        if split:
+            if row["involves_move_content"] == 1:
+                move_rows.append(row)
+            else: no_move_rows.append(row)
         rows.append(row)
+
+
         if total % 7 == 0:
             rows_state.append(row_state)
             row_state = {"correct": 1}
@@ -278,7 +289,9 @@ def compute_metrics(file_path, gold_file_path=None, zero_shot=False):
 
     df = pd.DataFrame(rows)
     df_states = pd.DataFrame(rows_state)
-    return df, df_states
+    df_move = pd.DataFrame(move_rows)
+    df_no_move = pd.DataFrame(no_move_rows)
+    return df, df_states, df_move, df_no_move
 
 
 def main():
@@ -295,46 +308,55 @@ def main():
     parser.add_argument("--zero_shot", action="store_true",
                         help="Set this when the data is in few-shot/zero-shot format.")
 
+    parser.add_argument("--split", type=str, default=None, required=False)
+
     args = parser.parse_args()
 
-    res_ex, res_states = compute_metrics(
-        args.model_output, gold_file_path=args.gold_data, zero_shot=args.zero_shot)
+    res_ex, res_states, res_move, res_no_move = compute_metrics(
+        args.model_output, gold_file_path=args.gold_data, zero_shot=args.zero_shot, split=args.split)
 
-    acc = res_ex.agg(accuracy=pd.NamedAgg("correct", lambda x: x.mean()),
+    acc_move = res_move.agg(accuracy=pd.NamedAgg("correct", lambda x: x.mean()),
                      count=pd.NamedAgg("correct", lambda x: x.count()),
                      correct=pd.NamedAgg("correct", lambda x: x.sum())).transpose()
-    acc_state = res_states.agg(accuracy=pd.NamedAgg("correct", lambda x: x.mean()),
-                               count=pd.NamedAgg(
-                                   "correct", lambda x: x.count()),
-                               correct=pd.NamedAgg("correct", lambda x: x.sum())).transpose()
+    acc_no_move = res_no_move.agg(accuracy=pd.NamedAgg("correct", lambda x: x.mean()),
+                     count=pd.NamedAgg("correct", lambda x: x.count()),
+                     correct=pd.NamedAgg("correct", lambda x: x.sum())).transpose()
 
-    print("#" * 80)
-    print(f"{BOLD_START}Overall Accuracy:{BOLD_END}")
-    for df, granularity in [(acc, "Examples"), (acc_state, "States")]:
-        print(
-            f"{granularity}: {int(df['correct'].iloc[0])}/{int(df['count'].iloc[0])}={df['accuracy'].iloc[0] * 100.0:.2f}")
-
-    acc_by_numops_local = res_ex.groupby("numops_local").agg(
+    acc_by_numops_local_move = res_move.groupby("numops_local").agg(
         accuracy=pd.NamedAgg("correct", lambda x: f"{x.mean() * 100.0:.2f}"),
         count=pd.NamedAgg("correct", lambda x: x.count())
     )
 
-    untouched_perf = float(res_ex[res_ex['numops_local'] == 0].agg(accuracy=pd.NamedAgg(
-        "correct", lambda x: f"{x.mean() * 100.0}"))["correct"].accuracy)
+    acc_by_numops_local_no_move = res_no_move.groupby("numops_local").agg(
+        accuracy=pd.NamedAgg("correct", lambda x: f"{x.mean() * 100.0:.2f}"),
+        count=pd.NamedAgg("correct", lambda x: x.count())
+    )
 
-    print(f"0 ops accuracy: {untouched_perf:.2f}")
+    print("#" * 80)
+    print(f"{BOLD_START}Overall Accuracy for move:{BOLD_END}")
+    for df_move, granularity_move in [(acc_move, "Examples")]:
+        print(
+            f"{granularity_move}: {int(df_move['correct'].iloc[0])}/{int(df_move['count'].iloc[0])}={df_move['accuracy'].iloc[0] * 100.0:.2f}")
 
-    touched_perf = float(res_ex[res_ex['numops_local'] >= 1].agg(accuracy=pd.NamedAgg(
+    print("#" * 40)
+    print(f"{BOLD_START}Example accuracy by number of operations affecting box state for boxes affected move:{BOLD_END}")
+    print(acc_by_numops_local_move)
+    print("#" * 80)
+
+    print(f"{BOLD_START}Overall Accuracy for not move:{BOLD_END}")
+    for df_no_move, granularity_no_move in [(acc_no_move, "Examples")]:
+        print(
+            f"{granularity_no_move}: {int(df_no_move['correct'].iloc[0])}/{int(df_no_move['count'].iloc[0])}={df_no_move['accuracy'].iloc[0] * 100.0:.2f}")
+
+    touched_perf_no_move = float(res_no_move[res_no_move['numops_local'] >= 1].agg(accuracy=pd.NamedAgg(
         "correct", lambda x: f"{x.mean() * 100.0:.2f}"))["correct"].accuracy)
 
-    print(f"1 + ops accuracy: {touched_perf:.2f}")
+    print(f"1 + ops accuracy: {touched_perf_no_move:.2f}")
 
+    print("#" * 40)
+    print(f"{BOLD_START}Example accuracy by number of operations affecting box state for boxes affected move:{BOLD_END}")
+    print(acc_by_numops_local_no_move)
     print("#" * 80)
-    print(f"{BOLD_START}Example accuracy by number of operations affecting box state:{BOLD_END}")
-    print(acc_by_numops_local)
-    # print(type(acc_by_numops_local))
-    print("#" * 80)
-
 
 if __name__ == "__main__":
     main()
