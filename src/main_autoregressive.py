@@ -37,7 +37,10 @@ def main():
 
     # Initialize model
     print(args.model_name)
-    model_kwargs = {"trust_remote_code": True}
+    model_kwargs = {
+        "trust_remote_code": True,
+        "token": os.environ["HF_TOKEN"],
+    }
     # Use 8 bits for 70B models
     if "70b" in args.model_name:
         model_kwargs["load_in_8bit"] = True
@@ -45,7 +48,10 @@ def main():
         if transformers.utils.is_torch_bf16_gpu_available():
             model_kwargs["torch_dtype"] = torch.bfloat16
     model = outlines.models.transformers(
-        args.model_name, device="auto", model_kwargs=model_kwargs)
+        args.model_name,
+        device="auto",
+        model_kwargs=model_kwargs,
+    )
 
     # Initialize prompt
     if args.chat:
